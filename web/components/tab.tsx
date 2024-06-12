@@ -9,13 +9,13 @@ export interface ITab {
 
 export interface ITabControlProps extends PropsWithChildren {
   tabs: ITab[];
-  defaultTab?: ITab;
+  defaultTabValue?: string;
 }
 
 export const TabControl: FC<ITabControlProps> = (props) => {
-  const { tabs, defaultTab, children } = props;
+  const { tabs, defaultTabValue, children } = props;
   return (
-    <Tabs defaultValue={defaultTab?.value} className="w-[400px]">
+    <Tabs defaultValue={defaultTabValue} className="w-[400px]">
       <TabsList>
         {tabs.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value}>

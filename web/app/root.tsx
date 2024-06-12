@@ -21,12 +21,18 @@ import {
 } from "lucide-react";
 import stylesheet from "~/tailwind.css?url";
 import { Toaster } from "@/components/ui/toaster";
+import { AppShell, Burger, Group, MantineProvider, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import "@mantine/core/styles.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
-const contexts = [<QueryClientProvider client={new QueryClient()} />];
+const contexts = [
+  <QueryClientProvider client={new QueryClient()} />,
+  <MantineProvider />,
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -50,12 +56,36 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const [opened, { toggle }] = useDisclosure();
+
   return (
-    <div className="flex">
-      <aside className="h-screen border-r border-zinc-200 basis-96">
-        <h1 className="px-6 pt-10 fixed">Fission Dashboard</h1>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="md"
+      styles={{
+        navbar: {
+          zIndex: 0,
+        },
+        header: {
+          zIndex: 0,
+        },
+      }}
+    >
+      <AppShell.Header>
+        <Group h="100%" px="md">
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Title order={4}>
+            Fission Dashboard
+          </Title>
+        </Group>
+      </AppShell.Header>
+      <AppShell.Navbar p="md">
         <Navigation
-          className="fixed top-20 w-72 pl-3"
           links={[
             {
               to: "/",
@@ -87,26 +117,12 @@ export default function App() {
               icon: GanttChart,
               label: "Jaeger",
             },
-            // {
-            //   to: "/settings",
-            //   icon: SettingsIcon,
-            //   label: "Settings",
-            // },
-            // {
-            //   to: "/help",
-            //   icon: CircleHelpIcon,
-            //   label: "Help",
-            // },
           ]}
         />
-      </aside>
-      <main className="w-full p-10">
+      </AppShell.Navbar>
+      <AppShell.Main>
         <Outlet />
-      </main>
-    </div>
+      </AppShell.Main>
+    </AppShell>
   );
-}
-
-export function HydrateFallback() {
-  return <p>Loading...</p>;
 }

@@ -7,104 +7,116 @@ import {
   ITimeTrigger,
 } from '@kubernetes-models/fission/fission.io/v1';
 import { TriggerDto } from './dto/trigger.dto';
+import { match, P } from 'ts-pattern';
 
 @Injectable()
 export class TriggerService {
   constructor(private readonly kubernetes: KubernetesService) {}
 
+  async createHttpTrigger(createTriggerDto: CreateTriggerDto) {
+    return await this.kubernetes.crd.createNamespacedCustomObject(
+      'fission.io',
+      'v1',
+      'default',
+      'httptriggers',
+      {
+        apiVersion: 'fission.io/v1',
+        kind: 'HTTPTrigger',
+        metadata: {
+          name: createTriggerDto.name,
+        },
+        spec: {
+          createingress: false,
+          functionref: {
+            name: createTriggerDto.function,
+            type: 'name',
+          },
+          ingressconfig: {
+            host: '*',
+            path: createTriggerDto.http.endpoint,
+          },
+          methods: [createTriggerDto.http.method],
+          relativeurl: createTriggerDto.http.endpoint,
+        },
+      } as IHTTPTrigger,
+    );
+  }
+
+  async createMessageQueueTrigger(createTriggerDto: CreateTriggerDto) {
+    return await this.kubernetes.crd.createNamespacedCustomObject(
+      'fission.io',
+      'v1',
+      'default',
+      'messagequeuetriggers',
+      {
+        apiVersion: 'fission.io/v1',
+        kind: 'MessageQueueTrigger',
+        metadata: {
+          name: createTriggerDto.name,
+        },
+        spec: {
+          contentType: 'application/json',
+          cooldownPeriod: createTriggerDto.mq.coldDownPeriod,
+          errorTopic: createTriggerDto.mq.errorTopic,
+          functionref: {
+            name: createTriggerDto.function,
+            type: 'name',
+          },
+          maxReplicaCount: 100,
+          maxRetries: createTriggerDto.mq.maxRetry,
+          messageQueueType: createTriggerDto.mq.type,
+          metadata: {
+            bootstrapServers: createTriggerDto.mq.bootstrapServer,
+            cosumerGroup: createTriggerDto.mq.groupId,
+            topic: createTriggerDto.mq.requestTopic,
+          },
+          minReplicaCount: 0,
+          mqtkind: createTriggerDto.mq.kind,
+          pollingInterval: createTriggerDto.mq.pollingInterval,
+          secret: createTriggerDto.mq.secret,
+          topic: createTriggerDto.mq.requestTopic,
+        },
+      } as IMessageQueueTrigger,
+    );
+  }
+
+  async createTimeTrigger(createTriggerDto: CreateTriggerDto) {
+    await this.kubernetes.crd.createNamespacedCustomObject(
+      'fission.io',
+      'v1',
+      'default',
+      'timetriggers',
+      {
+        apiVersion: 'fission.io/v1',
+        kind: 'TimeTrigger',
+        metadata: {
+          name: createTriggerDto.name,
+        },
+        spec: {
+          functionref: {
+            name: createTriggerDto.function,
+            type: 'name',
+          },
+          cron: createTriggerDto.schedule,
+        },
+      } as ITimeTrigger,
+    );
+  }
+
   async create(createTriggerDto: CreateTriggerDto) {
-    switch (createTriggerDto.type) {
-      case 'httptrigger': {
-        await this.kubernetes.crd.createNamespacedCustomObject(
-          'fission.io',
-          'v1',
-          'default',
-          'httptriggers',
-          {
-            apiVersion: 'fission.io/v1',
-            kind: 'HTTPTrigger',
-            metadata: {
-              name: createTriggerDto.name,
-            },
-            spec: {
-              createingress: false,
-              functionref: {
-                name: createTriggerDto.function,
-                type: 'name',
-              },
-              ingressconfig: {
-                host: '*',
-                path: createTriggerDto.http.endpoint,
-              },
-              methods: [createTriggerDto.http.method],
-              relativeurl: createTriggerDto.http.endpoint,
-            },
-          } as IHTTPTrigger,
-        );
-        break;
-      }
-      case 'messagequeuetrigger': {
-        await this.kubernetes.crd.createNamespacedCustomObject(
-          'fission.io',
-          'v1',
-          'default',
-          'messagequeuetriggers',
-          {
-            apiVersion: 'fission.io/v1',
-            kind: 'MessageQueueTrigger',
-            metadata: {
-              name: createTriggerDto.name,
-            },
-            spec: {
-              contentType: 'application/json',
-              cooldownPeriod: createTriggerDto.mq.coldDownPeriod,
-              errorTopic: createTriggerDto.mq.errorTopic,
-              functionref: {
-                name: createTriggerDto.function,
-                type: 'name',
-              },
-              maxReplicaCount: 100,
-              maxRetries: createTriggerDto.mq.maxRetry,
-              messageQueueType: createTriggerDto.mq.type,
-              metadata: {
-                bootstrapServers: createTriggerDto.mq.bootstrapServer,
-                cosumerGroup: createTriggerDto.mq.groupId,
-                topic: createTriggerDto.mq.requestTopic,
-              },
-              minReplicaCount: 0,
-              mqtkind: createTriggerDto.mq.kind,
-              pollingInterval: createTriggerDto.mq.pollingInterval,
-              secret: createTriggerDto.mq.secret,
-              topic: createTriggerDto.mq.requestTopic,
-            },
-          } as IMessageQueueTrigger,
-        );
-        break;
-      }
-      case 'timetrigger': {
-        await this.kubernetes.crd.createNamespacedCustomObject(
-          'fission.io',
-          'v1',
-          'default',
-          'timetriggers',
-          {
-            apiVersion: 'fission.io/v1',
-            kind: 'TimeTrigger',
-            metadata: {
-              name: createTriggerDto.name,
-            },
-            spec: {
-              functionref: {
-                name: createTriggerDto.function,
-                type: 'name',
-              },
-              cron: createTriggerDto.schedule,
-            },
-          } as ITimeTrigger,
-        );
-        break;
-      }
-    }
+    return await match(createTriggerDto)
+      .with({ type: 'httptrigger', http: P.nonNullable }, () =>
+        this.createHttpTrigger(createTriggerDto),
+      )
+      .with({ type: 'messagequeuetrigger', mq: P.nonNullable }, () =>
+        this.createMessageQueueTrigger(createTriggerDto),
+      )
+      .with({ type: 'timetrigger', schedule: P.nonNullable }, () =>
+        this.createTimeTrigger(createTriggerDto),
+      )
+      .otherwise(() => {
+        throw new Error('Invalid trigger type');
+      });
   }
 
   private async findAllTimeTriggers() {
@@ -176,7 +188,7 @@ export class TriggerService {
         http: {
           method: item.spec.methods[0],
           endpoint: item.spec.relativeurl,
-        }
+        },
       } as TriggerDto;
     });
   }

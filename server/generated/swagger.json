@@ -588,7 +588,7 @@
           "type": {
             "type": "string",
             "description": "The type of the trigger",
-            "example": "http",
+            "example": "httptrigger",
             "enum": [
               "httptrigger",
               "messagequeuetrigger",
@@ -639,7 +639,7 @@
           "type": {
             "type": "string",
             "description": "The type of the trigger",
-            "example": "http",
+            "example": "httptrigger",
             "enum": [
               "httptrigger",
               "messagequeuetrigger",

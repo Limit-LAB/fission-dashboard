@@ -36,6 +36,11 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Packages" }, { name: "description", content: "Packages" }];
+};
 
 export const columns: ColumnDef<PackageDto>[] = [
   {

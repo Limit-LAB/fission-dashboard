@@ -31,6 +31,14 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useCopy } from "@/hooks/use-copy";
 import { useToastError } from "@/hooks/use-toast-error";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Environments" },
+    { name: "description", content: "Environments" },
+  ];
+};
 
 export const columns: ColumnDef<EnvironmentDto>[] = [
   {

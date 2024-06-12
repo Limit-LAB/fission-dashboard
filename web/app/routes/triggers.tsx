@@ -43,6 +43,11 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Triggers" }, { name: "description", content: "Triggers" }];
+};
 
 export const columns: ColumnDef<TriggerDto>[] = [
   {
@@ -578,6 +583,7 @@ const CreateTrigger: FC = () => {
       description="Create a new trigger."
     >
       <TabControl
+        defaultTabValue="http"
         tabs={[
           {
             value: "http",

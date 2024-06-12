@@ -15,26 +15,6 @@ export class TriggerController {
   })
   @Post()
   create(@Body() createTriggerDto: CreateTriggerDto) {
-    switch (createTriggerDto.type) {
-      case 'httptrigger': {
-        if (!createTriggerDto.http) {
-          throw new Error('httpOption is required for http trigger');
-        }
-        break;
-      }
-      case 'timetrigger': {
-        if (!createTriggerDto.schedule) {
-          throw new Error('Schedule is required for time trigger');
-        }
-        break;
-      }
-      case 'messagequeuetrigger': {
-        if (!createTriggerDto.mq) {
-          throw new Error('Topic is required for message queue trigger');
-        }
-        break;
-      }
-    }
     return this.triggerService.create(createTriggerDto);
   }
 

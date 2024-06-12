@@ -16,7 +16,7 @@ export default function Index() {
       <title>Fission Dashboard</title>
       <meta name="description" content="Welcome to Remix (SPA Mode)!" />
       <iframe
-        className="w-full h-[calc(100vh-4rem)]"
+        className="w-full h-[calc(100vh-6rem)]"
         src={import.meta.env.VITE_PUBLIC_GRAFANA_API_HOST}
       ></iframe>
     </>

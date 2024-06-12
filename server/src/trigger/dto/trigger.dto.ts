@@ -101,7 +101,7 @@ export class HTTPOptions {
 export class TriggerDto {
   @ApiProperty({
     description: 'The type of the trigger',
-    example: 'http',
+    example: 'httptrigger',
     enum: [
       'httptrigger',
       'messagequeuetrigger',
