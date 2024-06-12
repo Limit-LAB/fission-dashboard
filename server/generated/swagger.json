@@ -1,0 +1,789 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/function": {
+      "post": {
+        "operationId": "FunctionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFunctionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The function has been successfully created."
+          }
+        },
+        "tags": [
+          "function"
+        ]
+      },
+      "get": {
+        "operationId": "FunctionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of all functions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FunctionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "function"
+        ]
+      }
+    },
+    "/function/{name}": {
+      "get": {
+        "operationId": "FunctionController_findOne",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The function with the specified name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FunctionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "function"
+        ]
+      },
+      "delete": {
+        "operationId": "FunctionController_remove",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The function has been successfully removed."
+          }
+        },
+        "tags": [
+          "function"
+        ]
+      }
+    },
+    "/trigger": {
+      "post": {
+        "operationId": "TriggerController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTriggerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The trigger has been successfully created."
+          }
+        },
+        "tags": [
+          "trigger"
+        ]
+      },
+      "get": {
+        "operationId": "TriggerController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of all triggers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TriggerDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "trigger"
+        ]
+      }
+    },
+    "/trigger/{name}": {
+      "get": {
+        "operationId": "TriggerController_findOne",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The trigger with the specified name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TriggerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "trigger"
+        ]
+      },
+      "delete": {
+        "operationId": "TriggerController_remove",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The trigger has been successfully removed."
+          }
+        },
+        "tags": [
+          "trigger"
+        ]
+      }
+    },
+    "/package": {
+      "post": {
+        "operationId": "PackageController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePackageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The package has been successfully created."
+          }
+        },
+        "tags": [
+          "package"
+        ]
+      },
+      "get": {
+        "operationId": "PackageController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of all packages.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackageDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "package"
+        ]
+      }
+    },
+    "/package/{name}": {
+      "get": {
+        "operationId": "PackageController_findOne",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The package with the specified name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "package"
+        ]
+      },
+      "delete": {
+        "operationId": "PackageController_remove",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The package has been successfully removed."
+          }
+        },
+        "tags": [
+          "package"
+        ]
+      }
+    },
+    "/environment": {
+      "post": {
+        "operationId": "EnvironmentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEnvironmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The environment has been successfully created."
+          }
+        },
+        "tags": [
+          "environment"
+        ]
+      },
+      "get": {
+        "operationId": "EnvironmentController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of all environments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EnvironmentDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "environment"
+        ]
+      }
+    },
+    "/environment/{name}": {
+      "get": {
+        "operationId": "EnvironmentController_findOne",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The environment with the specified name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "environment"
+        ]
+      },
+      "delete": {
+        "operationId": "EnvironmentController_remove",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The environment has been successfully removed."
+          }
+        },
+        "tags": [
+          "environment"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Fission Dashboard Spec",
+    "description": "The Fission Dashboard Spec API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateFunctionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function",
+            "example": "hello"
+          },
+          "env": {
+            "type": "string",
+            "description": "The runtime environment of the function",
+            "example": "nodejs"
+          },
+          "pkg": {
+            "type": "string",
+            "description": "The package of the function",
+            "example": "express-sda"
+          },
+          "entry": {
+            "type": "string",
+            "description": "The entrypoint of the function"
+          }
+        },
+        "required": [
+          "name",
+          "env",
+          "pkg"
+        ]
+      },
+      "FunctionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function",
+            "example": "hello"
+          },
+          "env": {
+            "type": "string",
+            "description": "The runtime environment of the function",
+            "example": "nodejs"
+          },
+          "pkg": {
+            "type": "string",
+            "description": "The package of the function",
+            "example": "express-sda"
+          },
+          "entry": {
+            "type": "string",
+            "description": "The entrypoint of the function"
+          }
+        },
+        "required": [
+          "name",
+          "env",
+          "pkg"
+        ]
+      },
+      "HTTPOptions": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "The method of the http trigger",
+            "example": "GET",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "DELETE",
+              "PATCH",
+              "OPTIONS",
+              "HEAD",
+              "CONNECT",
+              "TRACE"
+            ]
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "The endpoint of the http trigger",
+            "example": "/hello"
+          }
+        },
+        "required": [
+          "method",
+          "endpoint"
+        ]
+      },
+      "MqOptions": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the message queue",
+            "example": "kafka",
+            "enum": [
+              "kafka",
+              "nats",
+              "rabbitmq",
+              "redis"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "description": "The kind of the message queue",
+            "example": "keda",
+            "enum": [
+              "keda",
+              "knative"
+            ]
+          },
+          "requestTopic": {
+            "type": "string",
+            "description": "The topic of the message queue",
+            "example": "topic1"
+          },
+          "responseTopic": {
+            "type": "string",
+            "description": "The response topic of the message queue",
+            "example": "response-topic1"
+          },
+          "errorTopic": {
+            "type": "string",
+            "description": "The error topic of the message queue",
+            "example": "error-topic1"
+          },
+          "maxRetry": {
+            "type": "number",
+            "description": "The maxretry of the message queue",
+            "example": 3
+          },
+          "bootstrapServer": {
+            "type": "string",
+            "description": "The boostrap server of the message queue",
+            "example": "localhost:9092"
+          },
+          "groupId": {
+            "type": "string",
+            "description": "The group id of the message queue",
+            "example": "group1"
+          },
+          "coldDownPeriod": {
+            "type": "number",
+            "description": "The cold down period of the message queue",
+            "example": 30
+          },
+          "pollingInterval": {
+            "type": "number",
+            "description": "The polling interval of the message queue",
+            "example": 5
+          },
+          "secret": {
+            "type": "string",
+            "description": "The secret of the message queue",
+            "example": "secret1"
+          }
+        },
+        "required": [
+          "type",
+          "kind",
+          "requestTopic",
+          "responseTopic",
+          "errorTopic",
+          "maxRetry",
+          "bootstrapServer",
+          "groupId",
+          "coldDownPeriod",
+          "pollingInterval",
+          "secret"
+        ]
+      },
+      "CreateTriggerDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the trigger",
+            "example": "http",
+            "enum": [
+              "httptrigger",
+              "messagequeuetrigger",
+              "timetrigger"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the trigger",
+            "example": "http-trigger"
+          },
+          "http": {
+            "description": "The http options of the trigger",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/HTTPOptions"
+              }
+            ]
+          },
+          "function": {
+            "type": "string",
+            "description": "The name of the function",
+            "example": "hello"
+          },
+          "schedule": {
+            "type": "string",
+            "description": "The schedule of the trigger",
+            "example": "0 * * * *"
+          },
+          "mq": {
+            "description": "The mq options of the trigger",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MqOptions"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "function"
+        ]
+      },
+      "TriggerDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the trigger",
+            "example": "http",
+            "enum": [
+              "httptrigger",
+              "messagequeuetrigger",
+              "timetrigger"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the trigger",
+            "example": "http-trigger"
+          },
+          "http": {
+            "description": "The http options of the trigger",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/HTTPOptions"
+              }
+            ]
+          },
+          "function": {
+            "type": "string",
+            "description": "The name of the function",
+            "example": "hello"
+          },
+          "schedule": {
+            "type": "string",
+            "description": "The schedule of the trigger",
+            "example": "0 * * * *"
+          },
+          "mq": {
+            "description": "The mq options of the trigger",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MqOptions"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "function"
+        ]
+      },
+      "CreatePackageDto": {
+        "type": "object",
+        "properties": {
+          "environment": {
+            "type": "string",
+            "description": "The name of the environment",
+            "example": "nodejs"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the package",
+            "example": "express"
+          },
+          "codeUrl": {
+            "type": "string",
+            "description": "The URL of the package code (ZIP file)",
+            "example": "https://github.com/Limit-LAB/limit-function/raw/main/server/assets/fission-test.zip"
+          }
+        },
+        "required": [
+          "environment",
+          "name",
+          "codeUrl"
+        ]
+      },
+      "PackageDto": {
+        "type": "object",
+        "properties": {
+          "environment": {
+            "type": "string",
+            "description": "The name of the environment",
+            "example": "nodejs"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the package",
+            "example": "express"
+          },
+          "codeUrl": {
+            "type": "string",
+            "description": "The URL of the package code (ZIP file)",
+            "example": "https://github.com/Limit-LAB/limit-function/raw/main/server/assets/fission-test.zip"
+          }
+        },
+        "required": [
+          "environment",
+          "name",
+          "codeUrl"
+        ]
+      },
+      "CreateEnvironmentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the environment",
+            "example": "nodejs"
+          },
+          "image": {
+            "type": "string",
+            "description": "The image of the environment",
+            "example": "fission/node-env"
+          },
+          "builder": {
+            "type": "string",
+            "description": "The builder of the environment",
+            "example": "fission/node-builder"
+          }
+        },
+        "required": [
+          "name",
+          "image",
+          "builder"
+        ]
+      },
+      "EnvironmentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the environment",
+            "example": "nodejs"
+          },
+          "image": {
+            "type": "string",
+            "description": "The image of the environment",
+            "example": "fission/node-env"
+          },
+          "builder": {
+            "type": "string",
+            "description": "The builder of the environment",
+            "example": "fission/node-builder"
+          }
+        },
+        "required": [
+          "name",
+          "image",
+          "builder"
+        ]
+      }
+    }
+  }
+}

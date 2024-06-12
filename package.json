@@ -1,0 +1,13 @@
+{
+  "name": "limit-function-workspace",
+  "packageManager": "yarn@4.2.2",
+  "workspaces": [
+    "extension",
+    "server",
+    "web",
+    "deploy"
+  ],
+  "engines": {
+    "node": "20.14.0"
+  }
+}
